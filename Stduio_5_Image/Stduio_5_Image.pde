@@ -6,7 +6,7 @@ PImage grassBackground;
 PImage tree;
 PImage stump;
 
-PImage temp;
+PImage[] displayImage;
 
 int[] posX;
 int[] posY;
@@ -18,32 +18,34 @@ void setup() {
   tree = loadImage("Assets/pine_tree.png");
   stump = loadImage("Assets/stump.png");
   image(grassBackground, 0, 0);
-  
-  temp = tree;
 
   posX = new int[numTrees];
   posY = new int[numTrees];
-  
+
+  displayImage = new PImage[numTrees];
+
   loadNewPositions();
-  
+
+  for ( int i = 0; i < numTrees; i++) {
+    displayImage[i] = tree;
+  }
 }
 
 void draw() {
   image(grassBackground, 0, 0);
-  
+
   for (int i =0; i <numTrees; i++) {
-    temp.resize(75, 0);
-    image(temp, posX[i], posY[i]);
+    displayImage[i].resize(75, 0);
+    image(displayImage[i], posX[i], posY[i]);
   }
-  
-  if(counter % 100 == 0){
-    
+
+  if (frameCount % 10 == 0 && counter < numTrees) {
+    displayImage[counter] = stump;
+    counter++;
   }
-  
-  counter++;
 }
 
-void mousePressed(){
+void mousePressed() {
   loadNewPositions();
 }
 
