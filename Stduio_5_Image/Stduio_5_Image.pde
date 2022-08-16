@@ -1,3 +1,7 @@
+import processing.sound.*;
+
+SoundFile chainSaw;
+
 int numTrees = 100;
 
 int counter = 0;
@@ -14,10 +18,12 @@ int[] posY;
 
 void setup() {
   size(1000, 1000);
+  // Loading all assets
   grassBackground = loadImage("Assets/grassBG.png");
   tree = loadImage("Assets/pine_tree.png");
   stump = loadImage("Assets/stump.png");
   image(grassBackground, 0, 0);
+  chainSaw = new SoundFile(this, "Assets/chainsaw.mp3");
 
   posX = new int[numTrees];
   posY = new int[numTrees];
@@ -41,6 +47,9 @@ void draw() {
 
   if (frameCount % 10 == 0 && counter < numTrees) {
     displayImage[counter] = stump;
+    if (chainSaw.isPlaying() == false) {
+      chainSaw.play();
+    }
     counter++;
   }
 }
